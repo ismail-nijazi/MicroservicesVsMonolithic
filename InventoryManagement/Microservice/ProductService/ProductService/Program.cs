@@ -9,14 +9,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
-if (string.IsNullOrEmpty(connectionString))
-{
-    Console.WriteLine("Database connection string is missing.");
-}
-else
-{
-    Console.WriteLine($"Connection string is: {connectionString}");
-}
 builder.Services.AddDbContext<ProductServiceContext>(options =>
     options.UseNpgsql(connectionString));
 

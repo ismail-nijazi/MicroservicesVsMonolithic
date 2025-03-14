@@ -1,5 +1,5 @@
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
+using InventoryManagement.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Ocelot
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration);
+
+var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+builder.Services.AddDbContext<InventoryContext>(options =>
+    options.UseNpgsql(connectionString));
+
+builder.Services.AddControllers();
+
 
 var app = builder.Build();
 
@@ -22,12 +26,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-await app.UseOcelot();
-
+app.MapControllers();
 
 app.Run();
-
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {

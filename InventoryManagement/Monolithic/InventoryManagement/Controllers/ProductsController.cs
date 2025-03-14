@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProductService.Data;
-using ProductService.Dtos;
-using ProductService.Models;
+using InventoryManagement.Data;
+using InventoryManagement.Dtos;
+using InventoryManagement.Models;
 
-namespace ProductService.Controllers;
+namespace InventoryManagement.Controllers;
 
 [Controller]
 [Route("api/[controller]")]
-public class ProductsController(ProductServiceContext context) : ControllerBase{
+public class ProductsController(InventoryContext context) : ControllerBase{
 
-    private readonly ProductServiceContext _context = context;
+    private readonly InventoryContext _context = context;
 
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductDTO product){
