@@ -14,21 +14,28 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: 123456789012.dkr.ecr.us-west-2.amazonaws.com/product-service:latest # Replace with your ECR URI
+          image: "Image Repository URL"
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Production"
-            - name: ConnectionStrings__DefaultConnection
-              value: "Host=inventory-db.abcd1234.us-west-2.rds.amazonaws.com;Database=inventory_db;Username=postgres;Password=password" # Replace with your RDS endpoint and credentials
+            - name: ASPNETCORE_URLS
+              value: "http://+:80"
+            - name: DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: inventory-db-secrets
+                  key: connection-string
           resources:
             requests:
-              cpu: "250m" # 0.25 vCPU, conservative for t3.small (2 vCPUs total)
-              memory: "512Mi" # 512 MB, fits within 2 GiB RAM
+              cpu: "250m"
+              memory: "512Mi"
             limits:
-              cpu: "500m" # 0.5 vCPU
-              memory: "1024Mi" # 1 GiB
+              cpu: "500m"
+              memory: "1024Mi"
+
 ---
 apiVersion: v1
 kind: Service
@@ -40,4 +47,3 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-  type: ClusterIP # Internal service, accessed by API Gateway

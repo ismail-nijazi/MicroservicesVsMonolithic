@@ -67,3 +67,4 @@
 **/TestResult.xml \*_/_\_nunit-\*.xml
 
 **/.vs
+**/build_and_build_minikube.sh
