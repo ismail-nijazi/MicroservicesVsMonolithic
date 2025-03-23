@@ -1,1 +1,43 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+        - name: product-service
+          image: 123456789012.dkr.ecr.us-west-2.amazonaws.com/product-service:latest # Replace with your ECR URI
+          ports:
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: ConnectionStrings__DefaultConnection
+              value: "Host=inventory-db.abcd1234.us-west-2.rds.amazonaws.com;Database=inventory_db;Username=postgres;Password=password" # Replace with your RDS endpoint and credentials
+          resources:
+            requests:
+              cpu: "250m" # 0.25 vCPU, conservative for t3.small (2 vCPUs total)
+              memory: "512Mi" # 512 MB, fits within 2 GiB RAM
+            limits:
+              cpu: "500m" # 0.5 vCPU
+              memory: "1024Mi" # 1 GiB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP # Internal service, accessed by API Gateway

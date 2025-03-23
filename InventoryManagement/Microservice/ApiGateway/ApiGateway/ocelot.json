@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "product-service",
-          "Port": 5000
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/products/{everything}",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "stock-service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/stock/{everything}",
