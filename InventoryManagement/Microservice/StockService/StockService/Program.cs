@@ -25,6 +25,20 @@ builder.Services.AddControllers();
 var app = builder.Build();
 app.UseCors("AllowAll");
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<StockServiceContext>();
+    bool isConnected = dbContext.Database.CanConnect();
+    if (isConnected)
+    {
+        Console.WriteLine("Database connection successful!");
+    }
+    else
+    {
+        Console.WriteLine("Database connection failed!");
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -35,7 +49,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
-
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

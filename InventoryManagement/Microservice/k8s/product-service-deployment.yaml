@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: "Image Repository URL"
+          image: ismailnijazi/inventory_management_productservice:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
