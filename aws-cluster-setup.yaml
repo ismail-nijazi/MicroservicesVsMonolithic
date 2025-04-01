@@ -1,0 +1,30 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-thesis-cluster
+  region: eu-north-1
+  version: "1.29"
+  tags:
+    Project: thesis
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+nodeGroups:
+  - name: ng-thesis
+    instanceType: t3.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    volumeSize: 30
+    ssh:
+      allow: true
+      publicKeyName: eks-thesis-key2
+    labels:
+      role: worker
+      project: thesis
+    tags:
+      NodeGroup: thesis-ng
+      Project: thesis

@@ -50,14 +50,14 @@ spec:
 apiVersion: apps/v1
 kind: Service
 metadata:
-  name: inventory_management_nodeport
+  name: inventory_management_loadbalancer
 spec:
+  type: LoadBalancer
   selector:
     app: inventory_management
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30081
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
