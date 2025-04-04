@@ -10,6 +10,14 @@ builder.Services.AddSwaggerGen();
 
 
 var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("Database connection string is missing.");
+}
+else
+{
+    Console.WriteLine($"Connection string is: {connectionString}");
+}
 builder.Services.AddDbContext<InventoryContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -17,6 +25,23 @@ builder.Services.AddControllers();
 
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<InventoryContext>();
+    bool isConnected = dbContext.Database.CanConnect();
+    if (isConnected)
+    {
+        Console.WriteLine("Database connection successful!");
+    }
+    else
+    {
+        Console.WriteLine("Database connection failed!");
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

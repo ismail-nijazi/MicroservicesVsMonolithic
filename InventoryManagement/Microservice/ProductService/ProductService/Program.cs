@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
+using ProductService.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -14,10 +14,11 @@ builder.Services.AddDbContext<ProductServiceContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddHttpClient<ProductsController>();
+
 var app = builder.Build();
 
-
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -29,8 +30,3 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
