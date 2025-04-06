@@ -21,18 +21,16 @@ cloudWatch:
     enableTypes:
       ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
-nodeGroups:
+managedNodeGroups:
   - name: ng-thesis
     instanceType: t3.medium
     desiredCapacity: 1
     minSize: 1
     maxSize: 3
     volumeSize: 30
-    ssh:
-      allow: false
     labels:
       role: worker
-      project: thesis
     tags:
       NodeGroup: thesis-ng
-      Project: thesis
+    ssh:
+      allow: false

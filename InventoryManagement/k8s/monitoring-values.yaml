@@ -1,0 +1,91 @@
+global:
+  scrape_interval: 10s
+
+nodeSelector:
+  role: monitoring
+tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "monitoring"
+    effect: "NoSchedule"
+
+grafana:
+  nodeSelector:
+    role: monitoring
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "monitoring"
+      effect: "NoSchedule"
+
+kubeStateMetrics:
+  nodeSelector:
+    role: monitoring
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "monitoring"
+      effect: "NoSchedule"
+
+prometheusOperator:
+  nodeSelector:
+    role: monitoring
+  tolerations:
+    - key: "dedicated"
+      operator: "Equal"
+      value: "monitoring"
+      effect: "NoSchedule"
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: 10s
+    evaluationInterval: 10s
+    nodeSelector:
+      role: monitoring
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "monitoring"
+        effect: "NoSchedule"
+
+alertmanager:
+  alertmanagerSpec:
+    nodeSelector:
+      role: monitoring
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "monitoring"
+        effect: "NoSchedule"
+
+kubelet:
+  serviceMonitor:
+    interval: 10s
+
+kubeApiServer:
+  serviceMonitor:
+    interval: 10s
+
+coreDns:
+  serviceMonitor:
+    interval: 10s
+
+kubeControllerManager:
+  serviceMonitor:
+    interval: 10s
+
+kubeScheduler:
+  serviceMonitor:
+    interval: 10s
+
+kubeProxy:
+  serviceMonitor:
+    interval: 10s
+
+etcd:
+  serviceMonitor:
+    interval: 10s
+
+nodeExporter:
+  serviceMonitor:
+    interval: 10s

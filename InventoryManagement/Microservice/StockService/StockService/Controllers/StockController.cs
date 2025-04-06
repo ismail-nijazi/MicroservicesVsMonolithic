@@ -52,4 +52,15 @@ public class StockController: ControllerBase{
         await _context.SaveChangesAsync();
         return NoContent();
     }
+
+    [HttpGet("product/{productId}")]
+    public async Task<IActionResult> getStockByProductId(string productId)
+    {
+        var stock = await _context.Stock.FirstOrDefaultAsync(s => s.ProductId == productId);
+        if (stock == null)
+        {
+            return NotFound();
+        }
+        return Ok(stock);
+    }
 }

@@ -40,7 +40,7 @@ public class ProductsController(ProductServiceContext context, HttpClient httpCl
             return NotFound();
         }
 
-        var stockUrl = $"{_stockServiceBaseUrl}/api/stock/{id}";
+        var stockUrl = $"{_stockServiceBaseUrl}/api/stock/product/{id}";
 
         object stock = new { Quantity = "Unavailable" };
 

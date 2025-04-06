@@ -30,10 +30,10 @@ spec:
                   key: connection-string
           resources:
             requests:
-              cpu: "250m"
+              cpu: "600m"
               memory: "512Mi"
             limits:
-              cpu: "500m"
+              cpu: "1000m"
               memory: "1024Mi"
 
 ---
@@ -58,7 +58,7 @@ spec:
     kind: Deployment
     name: product-service
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 10
   metrics:
     - type: Resource
       resource:

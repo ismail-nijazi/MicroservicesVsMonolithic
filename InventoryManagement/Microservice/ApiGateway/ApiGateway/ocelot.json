@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "product-service",
+          "Host": "product-service-clusterip",
           "Port": 80
         }
       ],
@@ -17,7 +17,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "stock-service",
+          "Host": "stock-service-clusterip",
           "Port": 80
         }
       ],
